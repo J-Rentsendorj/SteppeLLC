@@ -1,0 +1,97 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  AZURE_WEBAPP_NAME: altan-dynamics-api
+  AZURE_WEBAPP_PACKAGE_PATH: './backend/src/AltanDynamics.Api/publish'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ./backend/src/AltanDynamics.Api
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ./backend/src/AltanDynamics.Api
+
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        working-directory: ./backend/src/AltanDynamics.Api
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-artifacts
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          retention-days: 7
+
+  deploy-azure:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.webapp-url }}
+    
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-artifacts
+          path: ./publish
+
+      # Deploy to Azure App Service (uncomment when ready)
+      # - name: Deploy to Azure Web App
+      #   id: deploy
+      #   uses: azure/webapps-deploy@v3
+      #   with:
+      #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #     package: ./publish
+
+      - name: Deploy notification
+        run: echo "✅ Backend deployment ready for production"
+
+  deploy-railway:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Deploy to Railway (uncomment when ready)
+      # - name: Install Railway CLI
+      #   run: npm install -g @railway/cli
+
+      # - name: Deploy to Railway
+      #   run: railway up --service altan-dynamics-api
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      #   working-directory: ./backend
+
+      - name: Deploy notification
+        run: echo "✅ Railway deployment ready"
