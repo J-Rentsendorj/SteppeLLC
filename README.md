@@ -64,7 +64,19 @@ This platform serves as both an academic capstone demonstration and a production
 - .NET 8.0 SDK
 - PostgreSQL database (Supabase recommended)
 
-### Frontend Setup
+### ⚡ One-Click Start (Recommended)
+
+For the fastest setup, simply double-click either file in the project root:
+- **`start-dev.bat`** (Command Prompt)
+- **`start-dev.ps1`** (PowerShell)
+
+This automatically starts both frontend and backend servers in separate terminals!
+
+See [QUICK_START.md](./QUICK_START.md) for detailed setup instructions and troubleshooting.
+
+### Manual Setup
+
+#### Frontend Setup
 
 ```bash
 # Install dependencies
@@ -79,7 +91,7 @@ npm run dev
 
 The frontend will be available at `http://localhost:5173`
 
-### Backend Setup
+#### Backend Setup
 
 ```bash
 # Navigate to backend
@@ -230,9 +242,11 @@ dotnet test
 
 ## 📖 Documentation
 
-- [Scope of Work](./SCOPE_OF_WORK.md) — Full project specification
-- [Backend README](./backend/README.md) — API documentation
-- [Swagger Docs](https://localhost:7212/swagger) — Interactive API docs
+- **[Quick Start Guide](./QUICK_START.md)** — Fastest way to get started (5 minutes!)
+- **[Email Setup Guide](./EMAIL_SETUP.md)** — Configure SendGrid email notifications
+- **[Scope of Work](./SCOPE_OF_WORK.md)** — Full project specification
+- **[Backend README](./backend/README.md)** — API documentation
+- **[Swagger Docs](https://localhost:7212/swagger)** — Interactive API docs (when running)
 
 ## 📄 License
 
