@@ -139,3 +139,4 @@ C:\Users\Bajka\OneDrive\Desktop\SENSE\backend\src\AltanDynamics.Api\obj\Debug\ne
 C:\Users\Bajka\OneDrive\Desktop\SENSE\backend\src\AltanDynamics.Api\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Bajka\OneDrive\Desktop\SENSE\backend\src\AltanDynamics.Api\bin\Debug\net8.0\SendGrid.dll
 C:\Users\Bajka\OneDrive\Desktop\SENSE\backend\src\AltanDynamics.Api\bin\Debug\net8.0\StarkbankEcdsa.dll
+c:\Users\Bajka\OneDrive\Desktop\SENSE\backend\src\AltanDynamics.Api\obj\Debug\net8.0\AltanDynamics.Api.sourcelink.json
